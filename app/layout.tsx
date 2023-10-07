@@ -1,22 +1,18 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import "./globals.css";
+import type { Metadata } from "next";
+import { Rajdhani } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+const font = Rajdhani({ weight: "500" });
 
 export const metadata: Metadata = {
-  title: 'Pong',
-  description: 'Play pong with your friends!',
-}
+  title: "Pong",
+  description: "Play pong with your friends!",
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={font.className}>{children}</body>
     </html>
-  )
+  );
 }
