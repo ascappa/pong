@@ -1,8 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Rajdhani } from "next/font/google";
+import { cn } from "@/lib/cn";
 
-const font = Rajdhani({ weight: "500" });
+const font = Rajdhani({ weight: "500", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pong",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={font.className}>{children}</body>
+      <body className={cn(font.className, "bg-stone-950 text-stone-50")}>{children}</body>
     </html>
   );
 }
