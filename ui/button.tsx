@@ -5,6 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/cn";
 import { motion } from "framer-motion";
+import { ClassValue } from "class-variance-authority/types";
 
 const buttonVariants = cva(
   "inline-flex relative items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-zinc-950 dark:focus-visible:ring-zinc-300",
@@ -42,6 +43,7 @@ export interface ButtonProps
   drawButton?: boolean;
   animationDuration?: number;
   letterSpread?: boolean;
+  outerClass?: ClassValue;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -52,28 +54,29 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size,
       asChild = false,
       drawButton = true,
-      animationDuration = 0.6,
+      animationDuration = 0.8,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
     return (
-      <Comp
-        className={cn(
-          buttonVariants({ variant, size, className }),
-        )}
-        ref={ref}
-        {...props}
+      <motion.div
+        className="relative inline-flex justify-center items-center"
+        initial={drawButton && { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: animationDuration + 0.2 }}
       >
+        <Comp
+          className={cn(buttonVariants({ variant, size, className }), "z-10")}
+          ref={ref}
+          {...props}
+        />
         <motion.svg
           viewBox="0 0 135 38"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className="absolute"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: animationDuration }}
         >
           <motion.g strokeWidth={2} className="stroke-current">
             <motion.path
@@ -90,18 +93,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </motion.g>
         </motion.svg>
-        <motion.span
+        {/* <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: animationDuration }}
+          className="z-10"
         >
           {props.children}
-        </motion.span>
-      </Comp>
+        </motion.span> */}
+      </motion.div>
     );
   }
 );
-const MotionButton = motion(Button, {});
+const MotionButton = motion(Button);
 Button.displayName = "Button";
 
 export { Button, MotionButton, buttonVariants };
