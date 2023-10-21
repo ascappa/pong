@@ -4,7 +4,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/cn";
-import { motion } from "framer-motion";
+import { motion, MotionProps, Variants } from "framer-motion";
 import { ClassValue } from "class-variance-authority/types";
 
 const buttonVariants = cva(
@@ -44,28 +44,42 @@ export interface ButtonProps
   animationDuration?: number;
   letterSpread?: boolean;
   outerClass?: ClassValue;
+  outerProps?: MotionProps;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const CvaButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
       variant,
       size,
       asChild = false,
-      drawButton = true,
+      drawButton = false,
       animationDuration = 0.8,
+      outerProps,
       ...props
     },
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
+    const container: Variants = {
+      hidden: {
+        opacity: 0,
+      },
+      show: {
+        opacity: 1,
+        transition: {
+          duration: animationDuration + 0.2,
+        },
+      },
+    };
     return (
       <motion.div
         className="relative inline-flex justify-center items-center"
-        initial={drawButton && { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: animationDuration + 0.2 }}
+        initial={drawButton && "hidden"}
+        animate="show"
+        variants={container}
+        {...outerProps}
       >
         <Comp
           className={cn(buttonVariants({ variant, size, className }), "z-10")}
@@ -105,7 +119,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
-const MotionButton = motion(Button);
-Button.displayName = "Button";
+CvaButton.displayName = "Button";
+const Button = motion(CvaButton);
 
-export { Button, MotionButton, buttonVariants };
+export { Button, buttonVariants };
