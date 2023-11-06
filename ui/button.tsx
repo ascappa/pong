@@ -12,7 +12,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90",
+        primary:
+          "text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90",
         destructive:
           "bg-red-500 text-zinc-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-zinc-50 dark:hover:bg-red-900/90",
         outline:
@@ -33,7 +34,7 @@ const buttonVariants = cva(
       variant: "primary",
       size: "lg",
     },
-  }
+  },
 );
 
 export interface ButtonProps
@@ -44,7 +45,8 @@ export interface ButtonProps
   animationDuration?: number;
   letterSpread?: boolean;
   outerClass?: ClassValue;
-  outerProps?: MotionProps;
+  motionProps?: MotionProps & { key?: string };
+  motionKey?: string;
 }
 
 const CvaButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -56,10 +58,11 @@ const CvaButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       asChild = false,
       drawButton = false,
       animationDuration = 0.8,
-      outerProps,
+      motionProps: outerProps,
+      motionKey,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = asChild ? Slot : "button";
     const container: Variants = {
@@ -75,14 +78,17 @@ const CvaButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
     return (
       <motion.div
-        className="relative inline-flex justify-center items-center"
+        className="relative inline-flex items-center justify-center"
         initial={drawButton && "hidden"}
         animate="show"
         variants={container}
         {...outerProps}
       >
         <Comp
-          className={cn(buttonVariants({ variant, size, className }), "z-10")}
+          className={cn(
+            buttonVariants({ variant, size, className }),
+            "z-10 w-full uppercase",
+          )}
           ref={ref}
           {...props}
         />
@@ -117,7 +123,7 @@ const CvaButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         </motion.span> */}
       </motion.div>
     );
-  }
+  },
 );
 CvaButton.displayName = "Button";
 const Button = motion(CvaButton);

@@ -1,5 +1,5 @@
-import HomePage from "./home-page";
+import { MainMenu } from "./_components/main-menu";
 
 export default function Home() {
-  return <HomePage />
+  return <MainMenu />;
 }

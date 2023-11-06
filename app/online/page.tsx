@@ -1,5 +1,5 @@
-import OnlinePage from "./online-page";
+import { OnlineMenu } from "./_components/online-menu";
 
 export default function Page() {
-  return <OnlinePage />
+  return <OnlineMenu />;
 }
