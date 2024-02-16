@@ -1,4 +1,5 @@
 "use client";
+import {motion} from "framer-motion"
 import { Button } from "@/ui/button";
 import Link from "next/link";
 import { isFirstVisitAtom } from "@/stores/genericStore";
@@ -11,9 +12,9 @@ export function OnlineMenu() {
   const nanoid = customAlphabet(alphanumeric, 10)
   const roomId = nanoid()
   return (
-    <div className="grid grid-cols-[minmax(19ch,_auto)] gap-5">
+    <motion.div className="grid place-content-center grid-cols-[minmax(19ch,_auto)] gap-5">
       <Button asChild motionProps={{ layoutId: "cpu", layout: layoutMode }} className="uppercase">
-        <Link href="/cpu">join room</Link>
+        <Link href="/online/room">join room</Link>
       </Button>
       <Button asChild motionProps={{ layoutId: "online", layout: layoutMode }} className="uppercase">
         <Link href={`/online/room/${roomId}`}>create room</Link>
@@ -29,6 +30,6 @@ export function OnlineMenu() {
       >
         <Link href="/">main menu</Link>
       </Button>
-    </div>
+    </motion.div>
   );
 }

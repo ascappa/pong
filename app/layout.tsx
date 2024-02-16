@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JotaiProvider>
           <MotionProvider>
             <VisitTracker>
-              <main className="flex h-[100dvh] flex-col items-center justify-center p-5">
+              <main className="flex h-[100dvh] items-center justify-center p-5">
                 {children}
               </main>
             </VisitTracker>

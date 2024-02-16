@@ -78,7 +78,7 @@ const CvaButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
     return (
       <motion.div
-        className="relative inline-flex items-center justify-center"
+        className={cn("relative inline-flex items-center justify-center", className)}
         initial={drawButton && "hidden"}
         animate="show"
         variants={container}
@@ -86,8 +86,9 @@ const CvaButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         <Comp
           className={cn(
-            buttonVariants({ variant, size, className }),
+            buttonVariants({ variant, size,}),
             "z-10 w-full uppercase",
+            
           )}
           ref={ref}
           {...props}
