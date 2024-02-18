@@ -9,7 +9,6 @@ import { isFirstVisitAtom } from "@/stores/genericStore";
 
 export function MainMenu() {
   const isFirstVisit = useAtomValue(isFirstVisitAtom);
-  const searchParams = useSearchParams();
   const animationDuration = 0.8;
   const willAnimate = isFirstVisit;
   return (
