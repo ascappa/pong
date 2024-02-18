@@ -134,7 +134,7 @@ export function Pong({ roomId }: { roomId: string }) {
         playerBar.pos.x = mousePos().x - playerBar.width / 2;
       });
     }
-  }, []);
+  }, [roomId]);
   return (
     <>
       <div onClick={() => setCount(count + 1)}>{count}</div>
