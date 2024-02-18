@@ -21,6 +21,9 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
     height: window.innerHeight < 500 ? window.innerHeight : 500,
     global: true,
   });
+
+  const font = "Rajdhani"
+  loadFont(font, "/Rajdhani-Regular.ttf")
   
   // const counter = add([text("3"), pos(center()), {value: 3, font:"__Rajdhani_78e6cd" }])
   // await wait(1)
@@ -47,7 +50,7 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
   let ball = add([circle(10), pos(center()), color(255, 255, 255), area()]);
   let ballXDirection = -1;
   let ballYDirection = 1;
-  const ballSpeed = 270;
+  const ballSpeed = 220;
 
   onKeyDown("right", () => {
     playerBar.moveBy(4.5, 0);
@@ -60,19 +63,19 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
   const playerScore = add([
     text("0"),
     pos(20, center().y),
-    { value: 0, font: "__Rajdhani_78e6cd" },
+    { value: 0, font },
   ]);
   const opponentScore = add([
     text("0"),
     pos(width() - 20, center().y),
     anchor("topright"),
-    { value: 0, font: "__Rajdhani_78e6cd" },
+    { value: 0, font },
   ]);
 
   onUpdate(() => {
     ball.moveBy(
       ballXDirection * ballSpeed * dt(),
-      ballYDirection * ballSpeed * dt()
+      ballYDirection * ballSpeed * 1.5 * dt()
     );
     if (ball.pos.x - ball.radius <= 0 ||
       ball.pos.x + ball.radius >= width()) {
@@ -86,12 +89,11 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
 
 
   onUpdate(async () => {
-
     if (ball.pos.y < height() * (2 / 3) && ball.exists()) {
       opponentBar.moveTo(
         ball.pos.x - opponentBar.width / 2,
         opponentBar.pos.y,
-        width() / 2 + 50
+        width() / 3 + 50
       );
     }
 
@@ -103,7 +105,7 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
       const countdown = add([
         text("3"),
         pos(center()),
-        { value: 3, font: "__Rajdhani_78e6cd" },
+        { value: 3, font },
       ]);
       await wait(1);
       const loopId = loop(1, () => {
@@ -125,7 +127,7 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
       const countdown = add([
         text("3"),
         pos(center()),
-        { value: 3, font: "__Rajdhani_78e6cd" },
+        { value: 3, font },
       ]);
       await wait(1);
       const loopId = loop(1, () => {
@@ -139,6 +141,7 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
       add(ball);
     }
   });
+
   onClick(() => {
     const { x } = mousePos();
     tween(
@@ -149,6 +152,7 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
       easings.easeOutSine
     );
   });
+
   onTouchMove(() => {
     const { x } = mousePos();
     tween(
