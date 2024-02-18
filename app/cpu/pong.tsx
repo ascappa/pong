@@ -69,18 +69,21 @@ async function startGame(canvasRef: RefObject<HTMLCanvasElement>) {
     { value: 0, font: "__Rajdhani_78e6cd" },
   ]);
 
-  ball.moveBy(
-    ballXDirection * ballSpeed * dt(),
-    ballYDirection * ballSpeed * dt()
-  );
-  if (ball.pos.x - ball.radius <= 0 ||
-    ball.pos.x + ball.radius >= width()) {
-    ballXDirection *= -1;
-  }
-  if (ball.pos.y - ball.radius <= 0 ||
-    ball.pos.y + ball.radius >= height()) {
-    ballYDirection *= -1;
-  }
+  onUpdate(() => {
+    ball.moveBy(
+      ballXDirection * ballSpeed * dt(),
+      ballYDirection * ballSpeed * dt()
+    );
+    if (ball.pos.x - ball.radius <= 0 ||
+      ball.pos.x + ball.radius >= width()) {
+      ballXDirection *= -1;
+    }
+    if (ball.pos.y - ball.radius <= 0 ||
+      ball.pos.y + ball.radius >= height()) {
+      ballYDirection *= -1;
+    }
+  })
+
 
   onUpdate(async () => {
 
